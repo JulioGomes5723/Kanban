@@ -138,9 +138,9 @@ body {
 .dragging {
   opacity: 0.5;
 }
-  .cards-hover{
-    background-color: #f0bc0f;
-  }
+.cards-hover {
+  background-color: #c2e0b5;
+}
 
 *::-webkit-scrollbar {
   width: 8px;
@@ -152,4 +152,12 @@ body {
 *::-webkit-scrollbar-thumb {
   background-color: #a5b4fc;
   border-radius: 20px;
+}
+.card-text {
+  width: 100%;
+  min-height: 80px;
+  border: none;
+  resize: vertical;
+  padding: 5px;
+  box-sizing: border-box;
 }
