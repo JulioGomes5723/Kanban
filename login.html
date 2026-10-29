@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/css/login.css" />
+    <title>Login – Kanban</title>
+  </head>
+  <body>
+    <main class="login-box">
+      <h1>Kanban</h1>
+
+      <div class="abas">
+        <button type="button" id="aba-entrar" class="ativa">Entrar</button>
+        <button type="button" id="aba-criar">Criar conta</button>
+      </div>
+
+      <form id="form-login" novalidate>
+        <label>
+          E-mail
+          <input type="email" name="email" autocomplete="email" required />
+        </label>
+
+        <label id="campo-nome" hidden>
+          Nome
+          <input type="text" name="nome" autocomplete="name" />
+        </label>
+
+        <label>
+          Senha
+          <input type="password" name="senha" autocomplete="current-password" minlength="6" required />
+        </label>
+
+        <p id="mensagem" role="alert"></p>
+        <button type="submit" id="botao-enviar">Entrar</button>
+      </form>
+    </main>
+
+    <script src="/src/javascript/auth.js"></script>
+  </body>
+</html>
