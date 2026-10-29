@@ -13,11 +13,14 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    
+    <script>
+  if (!localStorage.getItem("kanban-sessao")) location.replace("/login.html");
+</script>
     <link rel="stylesheet" href="/src/css/style.css" />
     <title>Kanban</title>
   </head>
   <body>
+    <button id="btn-sair" type="button">Sair</button>
     <main class="kanban">
       <!-- COLUMN 1 -->
       <div class="kanban-column" data-id="1">
