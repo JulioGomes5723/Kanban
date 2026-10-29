@@ -161,3 +161,8 @@ body {
   padding: 5px;
   box-sizing: border-box;
 }
+.botao-sair {
+  border-radius: 5px;
+  background-color: darkgray;
+
+}
