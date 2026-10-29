@@ -2,7 +2,8 @@
 // KANBAN – adicionar, editar, apagar, comentar e arrastar
 // =====================================================
 
-const CHAVE = "kanban-v1"; // mude para "kanban-v2" se quiser descartar os dados salvos
+const USUARIO = localStorage.getItem("kanban-sessao") || "";
+const CHAVE = "kanban-v1-" + USUARIO; // mude para "kanban-v2" se quiser descartar os dados salvos
 const AVATAR = document.querySelector(".user img")?.getAttribute("src") || "";
 
 // ---------- Salvar / carregar (localStorage) ----------
@@ -13,10 +14,18 @@ function salvar() {
 
     // limpa estados temporários antes de salvar
     clone.classList.remove("cards-hover");
-    clone.querySelectorAll(".dragging").forEach((c) => c.classList.remove("dragging"));
-    clone.querySelectorAll(".editando").forEach((c) => c.classList.remove("editando"));
-    clone.querySelectorAll("[contenteditable]").forEach((e) => e.removeAttribute("contenteditable"));
-    clone.querySelectorAll(".btn-edit i").forEach((i) => (i.className = "fa-solid fa-pen"));
+    clone
+      .querySelectorAll(".dragging")
+      .forEach((c) => c.classList.remove("dragging"));
+    clone
+      .querySelectorAll(".editando")
+      .forEach((c) => c.classList.remove("editando"));
+    clone
+      .querySelectorAll("[contenteditable]")
+      .forEach((e) => e.removeAttribute("contenteditable"));
+    clone
+      .querySelectorAll(".btn-edit i")
+      .forEach((i) => (i.className = "fa-solid fa-pen"));
     clone.querySelectorAll(".kanban-card").forEach((c) => (c.draggable = true));
 
     dados[col.dataset.id] = clone.innerHTML;
@@ -150,7 +159,9 @@ document.addEventListener("click", (e) => {
   // + adicionar card
   const botaoAdd = e.target.closest(".add-card");
   if (botaoAdd) {
-    const lista = botaoAdd.closest(".kanban-column").querySelector(".kanban-cards");
+    const lista = botaoAdd
+      .closest(".kanban-column")
+      .querySelector(".kanban-cards");
     const card = criarCard("Novo card");
     lista.append(card);
     iniciarEdicao(card);
@@ -162,7 +173,9 @@ document.addEventListener("click", (e) => {
 
   // editar / salvar edição
   if (e.target.closest(".btn-edit")) {
-    card.classList.contains("editando") ? finalizarEdicao(card) : iniciarEdicao(card);
+    card.classList.contains("editando")
+      ? finalizarEdicao(card)
+      : iniciarEdicao(card);
     return;
   }
 
@@ -249,7 +262,8 @@ document.addEventListener("submit", (e) => {
 
 // não deixa o card ser arrastado enquanto você digita um comentário
 document.addEventListener("focusin", (e) => {
-  if (e.target.matches?.(".comment-form input")) e.target.closest(".kanban-card").draggable = false;
+  if (e.target.matches?.(".comment-form input"))
+    e.target.closest(".kanban-card").draggable = false;
 });
 document.addEventListener("focusout", (e) => {
   if (e.target.matches?.(".comment-form input")) {
@@ -281,7 +295,8 @@ document.querySelectorAll(".kanban-cards").forEach((coluna) => {
   });
 
   coluna.addEventListener("dragleave", (e) => {
-    if (!coluna.contains(e.relatedTarget)) coluna.classList.remove("cards-hover");
+    if (!coluna.contains(e.relatedTarget))
+      coluna.classList.remove("cards-hover");
   });
 
   coluna.addEventListener("drop", (e) => {
@@ -292,7 +307,9 @@ document.querySelectorAll(".kanban-cards").forEach((coluna) => {
     if (!arrastado) return;
 
     // descobre antes de qual card ele foi solto (pela posição do mouse)
-    const depois = [...coluna.querySelectorAll(".kanban-card:not(.dragging)")].find((c) => {
+    const depois = [
+      ...coluna.querySelectorAll(".kanban-card:not(.dragging)"),
+    ].find((c) => {
       const r = c.getBoundingClientRect();
       return e.clientY < r.top + r.height / 2;
     });
@@ -305,3 +322,7 @@ document.querySelectorAll(".kanban-cards").forEach((coluna) => {
 // ---------- Início ----------
 carregar();
 document.querySelectorAll(".kanban-card").forEach(prepararCard);
+document.getElementById("btn-sair")?.addEventListener("click", () => {
+  localStorage.removeItem("kanban-sessao");
+  location.replace("/login.html");
+});
